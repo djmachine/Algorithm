@@ -14,10 +14,10 @@ def backtraking(k, d, cnt):
     return max_cnt
 
 def solution(k, dungeons):
-    
+
     answer = backtraking(k, dungeons, 0)
     
     return answer
 
 
-solution([[80,20],[50,40],[30,10]])
+print(solution(80, [[80,20],[50,40],[30,10]]))
