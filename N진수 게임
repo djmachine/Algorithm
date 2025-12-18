@@ -1,0 +1,45 @@
+def toN(n, t):
+    if t == 0:
+        return "0"
+    
+    answer = ""
+    
+    while(t>0):
+        if t % n < 10:
+            answer = str(t % n) + answer
+        elif t % n == 10:
+            answer = "A" + answer
+        elif t % n == 11:
+            answer = "B" + answer
+        elif t % n == 12:
+            answer = "C" + answer
+        elif t % n == 13:
+            answer = "D" + answer
+        elif t % n == 14:
+            answer = "E" + answer
+        elif t % n == 15:
+            answer = "F" + answer
+        
+        t = t // n
+        
+    return answer
+
+def solution(n, t, m, p):
+    
+    e = ""
+    answer = ""
+    num = 0
+    index = p-1
+    
+    while(len(e) <  t * m):
+        e += toN(n, num)
+        num += 1
+    
+    while(len(answer) < t):
+        answer += e[index]
+        index += m
+    
+
+    return answer
+
+print(solution(2,4,2,1))
