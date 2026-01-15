@@ -1,0 +1,50 @@
+def toMinute(lis):
+    inTime = lis[0].split(":")
+    outTime = lis[1].split(":")
+    hour = int(outTime[0]) - int(inTime[0])
+    minute = int(outTime[1]) - int(inTime[1])
+    
+    return [hour, minute]
+
+def solution(fees, records):
+    dic = {}
+    lis = []
+    answer = []
+    
+    for record in records:
+        time, num, check = record.split(" ")
+        if check == "IN":
+            dic[num] = [time, "23:59"]
+        else:
+            dic[num][1] = time
+            lis.append([num,dic[num]])
+    
+    for key in dic:
+        if dic[key][1] == "23:59":
+            lis.append([key, dic[key]])
+        dic[key] = 0
+    
+    for i in lis:
+        hour, minute = toMinute(i[1])
+        dic[i[0]] += (60*hour) + minute
+
+    keys = sorted(dic.keys())
+    
+    for key in keys:
+        default = fees[1]
+        minutes = dic[key]
+        
+        extraTime = minutes - fees[0]
+        if extraTime < 0:
+            extraTime = 0
+            
+        value = extraTime//fees[2]
+        
+        if extraTime % fees[2] != 0:
+            value += 1
+        
+        answer.append(default+(value*fees[3]))
+    
+    return answer
+
+print(solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"]))
